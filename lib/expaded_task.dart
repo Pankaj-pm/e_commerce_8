@@ -25,13 +25,7 @@ class _ExpandedTaskState extends State<ExpandedTask> {
               width: 50,
             ),
           ),
-          Expanded(
-              flex: 4,
-              child: Container(
-                color: Colors.yellow,
-                height: 50,
-                width: double.infinity,
-              )),
+          Spacer(flex: 2),
           Expanded(
             flex: 2,
             child: Container(
