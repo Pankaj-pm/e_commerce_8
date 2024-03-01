@@ -7,20 +7,29 @@ class ProductDetail extends StatelessWidget {
   String? name;
   IconData? iconData;
 
-  List icons=[Icons.add,Icons.ac_unit,Icons.accessible_forward_outlined,];
+  List icons = [
+    Icons.add,
+    Icons.ac_unit,
+    Icons.accessible_forward_outlined,
+  ];
 
-  ProductDetail({super.key, this.name,});
+  ProductDetail({
+    super.key,
+    this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
+    name = "${ModalRoute.of(context)?.settings.arguments}";
+
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.chevron_left),
-        ),
+        // leading: InkWell(
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //   },
+        //   child: Icon(Icons.chevron_left),
+        // ),
         title: Text("Detail page"),
         centerTitle: true,
         actions: icons.map((e) {
@@ -36,7 +45,7 @@ class ProductDetail extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.black54,
+                color: Colors.white,
                 boxShadow: [
                   BoxShadow(color: Colors.grey, spreadRadius: 3, blurRadius: 10, offset: Offset(0, -10)),
                 ],
@@ -101,6 +110,16 @@ class ProductDetail extends StatelessWidget {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "cart_page");
+
+        },
+        child: Icon(Icons.shopping_cart_checkout),
+        foregroundColor: Colors.black,
+        splashColor: Colors.blue,
+        backgroundColor: Colors.red,
       ),
     );
   }

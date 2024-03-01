@@ -48,11 +48,13 @@ class _NewHomeState extends State<NewHome> {
                   children: product.map((e) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return ProductDetail();
-                          },
-                        ));
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) {
+                        //     return ProductDetail(name:e["name"] ,);
+                        //   },
+                        // ));
+
+                        Navigator.pushNamed(context, "product_detail", arguments: e["name"]);
                       },
                       child: Product(
                         name: e["name"],
