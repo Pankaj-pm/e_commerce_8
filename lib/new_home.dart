@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:e_commerce/product_detail.dart';
 import 'package:e_commerce/util.dart';
@@ -13,6 +13,10 @@ class NewHome extends StatefulWidget {
 }
 
 class _NewHomeState extends State<NewHome> {
+  String? selectedCategory;
+  double slideVal = 0;
+  RangeValues rangeValue = RangeValues(0, 1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,18 +34,60 @@ class _NewHomeState extends State<NewHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                child: Text("A"),
-                backgroundColor: Colors.black,
-                radius: MediaQuery.of(context).size.width * 0.10,
-                foregroundColor: Colors.black,
-                // backgroundImage: NetworkImage("https://as2.ftcdn.net/v2/jpg/02/44/42/79/1000_F_244427911_aoHHulebtYy4wLpncBBuWqCTNFKolcCB.jpg"),
-                backgroundImage: AssetImage("assets/image_1.png"),
+              Row(
+                children: [
+                  DropdownButton(
+                    value: selectedCategory,
+                    hint: Text("Select Category"),
+                    items: category.map((e) {
+                      return DropdownMenuItem(child: Text(e), value: e);
+                    }).toList(),
+                    onChanged: (val) {
+                      selectedCategory = val;
+                      setState(() {});
+                    },
+                  ),
+                  ActionChip(
+                    onPressed: () {
+                      selectedCategory=null;
+                      setState(() {
+
+                      });
+                      print("Clear");
+                    },
+                    avatar: Icon(Icons.close),
+                    label: Text("Clear"),
+                  )
+                ],
               ),
-              Text("Select Category"),
+              Slider(
+                  value: slideVal,
+                  min: 0,
+                  max: 100,
+                  onChanged: (val) {
+                    slideVal = val;
+                    setState(() {});
+                  }),
+              Row(
+                children: [
+                  Text("From\n ${rangeValue.start.toStringAsFixed(2)}"),
+                  Expanded(
+                    child: RangeSlider(
+                        values: rangeValue,
+                        min: 0,
+                        max: 100,
+                        onChanged: (val) {
+                          rangeValue = val;
+                          setState(() {});
+                          print(val);
+                        }),
+                  ),
+                  Text("To\n${rangeValue.end.toStringAsFixed(2)}"),
+                ],
+              ),
               Text("Smartphone"),
-              Text("width = ${MediaQuery.of(context).size.width}"),
-              Text("height = ${MediaQuery.of(context).size.height}"),
+              // Text("width = ${MediaQuery.of(context).size.width}"),
+              // Text("height = ${MediaQuery.of(context).size.height}"),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
