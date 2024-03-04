@@ -24,9 +24,15 @@ class _NewHomeState extends State<NewHome> {
           title: Text("Home"),
           centerTitle: true,
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.shopping_cart_rounded),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, "cart_page");
+
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.shopping_cart_rounded),
+              ),
             ),
           ],
         ),
@@ -47,17 +53,16 @@ class _NewHomeState extends State<NewHome> {
                       setState(() {});
                     },
                   ),
-                  ActionChip(
-                    onPressed: () {
-                      selectedCategory=null;
-                      setState(() {
-
-                      });
-                      print("Clear");
-                    },
-                    avatar: Icon(Icons.close),
-                    label: Text("Clear"),
-                  )
+                  if (selectedCategory != null)
+                    ActionChip(
+                      onPressed: () {
+                        selectedCategory = null;
+                        setState(() {});
+                        print("Clear");
+                      },
+                      avatar: Icon(Icons.close),
+                      label: Text("Clear"),
+                    )
                 ],
               ),
               Slider(
@@ -100,7 +105,7 @@ class _NewHomeState extends State<NewHome> {
                         //   },
                         // ));
 
-                        Navigator.pushNamed(context, "product_detail", arguments: e["name"]);
+                        Navigator.pushNamed(context, "product_detail", arguments: e);
                       },
                       child: Product(
                         name: e["name"],
@@ -153,20 +158,20 @@ class Product extends StatelessWidget {
               child: Text("12.96%"),
             ),
           ),
-          // Expanded(
-          //   child: Image.network(
-          //     img ?? "",
-          //     fit: BoxFit.contain,
-          //     height: 50,
-          //   ),
-          // ),
           Expanded(
-            child: Image.asset(
-              "assets/image_2.png",
-              fit: BoxFit.cover,
+            child: Image.network(
+              img ?? "",
+              fit: BoxFit.contain,
               height: 50,
             ),
           ),
+          // Expanded(
+          //   child: Image.asset(
+          //     "assets/image_2.png",
+          //     fit: BoxFit.cover,
+          //     height: 50,
+          //   ),
+          // ),
           Text(
             name ?? "",
             style: TextStyle(fontSize: 18),

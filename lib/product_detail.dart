@@ -4,7 +4,7 @@ import 'package:e_commerce/util.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetail extends StatelessWidget {
-  String? name;
+  Map? product;
   IconData? iconData;
 
   List icons = [
@@ -15,12 +15,12 @@ class ProductDetail extends StatelessWidget {
 
   ProductDetail({
     super.key,
-    this.name,
+    this.product,
   });
 
   @override
   Widget build(BuildContext context) {
-    name = "${ModalRoute.of(context)?.settings.arguments}";
+    product = ModalRoute.of(context)?.settings.arguments as Map;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,8 +39,7 @@ class ProductDetail extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Image.network(
-                "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/m/o/y/g34-5g-pb1v0000in-motorola-original-imagwu4s8naevwyq.jpeg?q=70&crop=false"),
+            child: Image.network(product?["img"]??""),
           ),
           Container(
             padding: EdgeInsets.all(10),
@@ -59,11 +58,10 @@ class ProductDetail extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                        child: Text(
-                      name ?? "",
+                        child: Text(product?["name"]??"" ,
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     )),
-                    Text("\$ 124", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red)),
+                    Text("\$ ${product?["price"]}", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red)),
                   ],
                 ),
                 Row(
@@ -113,6 +111,10 @@ class ProductDetail extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if(product!=null){
+            cartList.add(product!);
+          }
+
           Navigator.pushNamed(context, "cart_page");
 
         },
